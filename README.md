@@ -1,0 +1,4 @@
+tcpsocketpup
+============
+
+toggle mozTCPSocket access
