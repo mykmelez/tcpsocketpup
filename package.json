@@ -1,8 +1,8 @@
 {
-  "title": "TCP Socket Pup",
+  "title": "API Enabler",
   "name": "tcpsocketpup",
-  "version": "0.0.1",
-  "description": "Toggle mozTCPSocket access.",
+  "version": "0.2",
+  "description": "Toggle mozTCPSocket/mozContacts access for a page.",
   "main": "index.js",
   "author": "Myk Melez",
   "engines": {

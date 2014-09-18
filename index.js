@@ -8,8 +8,9 @@ var { Cu } = require("chrome");
 Cu.import("resource://gre/modules/Services.jsm");
 
 const TCP_SOCKET_PERM = "tcp-socket";
-const LABEL_DISABLED = "mozTCPSocket API disabled";
-const LABEL_ENABLED = "mozTCPSocket API enabled";
+const CONTACTS_READ_PERM = "contacts-read";
+const LABEL_DISABLED = "mozTCPSocket/mozContacts APIs disabled";
+const LABEL_ENABLED = "mozTCPSocket/mozContacts APIs enabled";
 const ICON_DISABLED = "./unplugged.svg";
 const ICON_ENABLED = "./plugged.svg";
 const STATE_DISABLED = {
@@ -34,10 +35,12 @@ var button = ActionButton({
   onClick: function(state) {
     if (state.label == LABEL_DISABLED) {
       Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), TCP_SOCKET_PERM, Services.perms.ALLOW_ACTION);
+      Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_READ_PERM, Services.perms.ALLOW_ACTION);
       button.state("tab", STATE_ENABLED);
     }
     else {
       Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), TCP_SOCKET_PERM);
+      Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_READ_PERM);
       button.state("tab", STATE_DISABLED);
     }
   },
@@ -45,7 +48,8 @@ var button = ActionButton({
 });
 
 tabs.on("pageshow", function(tab) {
-  if (Services.perms.testPermissionFromPrincipal(getPrincipal(tab), TCP_SOCKET_PERM) == Services.perms.ALLOW_ACTION) {
+  if (Services.perms.testPermissionFromPrincipal(getPrincipal(tab), TCP_SOCKET_PERM) == Services.perms.ALLOW_ACTION &&
+      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), CONTACTS_READ_PERM) == Services.perms.ALLOW_ACTION) {
     button.state(tab, STATE_ENABLED);
   }
   else {
