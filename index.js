@@ -7,8 +7,15 @@ var tabs = require("sdk/tabs");
 var { Cu } = require("chrome");
 Cu.import("resource://gre/modules/Services.jsm");
 
+// We don't use this directly (which is why we import it into an object literal
+// that we then discard), but nothing in the browser imports it, and it
+// needs to be imported in order for mozContacts to work, so we do it ourselves.
+Cu.import("resource://gre/modules/ContactService.jsm", {});
+
 const TCP_SOCKET_PERM = "tcp-socket";
 const CONTACTS_READ_PERM = "contacts-read";
+const CONTACTS_WRITE_PERM = "contacts-write";
+const CONTACTS_CREATE_PERM = "contacts-create";
 const LABEL_DISABLED = "mozTCPSocket/mozContacts APIs disabled";
 const LABEL_ENABLED = "mozTCPSocket/mozContacts APIs enabled";
 const ICON_DISABLED = "./unplugged.svg";
@@ -36,11 +43,15 @@ var button = ActionButton({
     if (state.label == LABEL_DISABLED) {
       Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), TCP_SOCKET_PERM, Services.perms.ALLOW_ACTION);
       Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_READ_PERM, Services.perms.ALLOW_ACTION);
+      Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_WRITE_PERM, Services.perms.ALLOW_ACTION);
+      Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_CREATE_PERM, Services.perms.ALLOW_ACTION);
       button.state("tab", STATE_ENABLED);
     }
     else {
       Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), TCP_SOCKET_PERM);
       Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_READ_PERM);
+      Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_WRITE_PERM);
+      Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_CREATE_PERM);
       button.state("tab", STATE_DISABLED);
     }
   },
@@ -49,7 +60,9 @@ var button = ActionButton({
 
 tabs.on("pageshow", function(tab) {
   if (Services.perms.testPermissionFromPrincipal(getPrincipal(tab), TCP_SOCKET_PERM) == Services.perms.ALLOW_ACTION &&
-      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), CONTACTS_READ_PERM) == Services.perms.ALLOW_ACTION) {
+      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), CONTACTS_READ_PERM) == Services.perms.ALLOW_ACTION &&
+      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), CONTACTS_WRITE_PERM) == Services.perms.ALLOW_ACTION &&
+      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), CONTACTS_CREATE_PERM) == Services.perms.ALLOW_ACTION) {
     button.state(tab, STATE_ENABLED);
   }
   else {
