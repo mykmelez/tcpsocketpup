@@ -7,6 +7,14 @@ var tabs = require("sdk/tabs");
 var { Cu } = require("chrome");
 Cu.import("resource://gre/modules/Services.jsm");
 
+// dom.mozTCPSocket.enabled is not set by default, but it's observed.
+// dom.mozContacts.enabled is set by default but ignored, which is why
+// we have to import ContactService.jsm below.  So it actually doesn't
+// do anything now, but it'll do something in the future, when the bug
+// is fixed.
+Services.prefs.setBoolPref("dom.mozTCPSocket.enabled", true);
+Services.prefs.setBoolPref("dom.mozContacts.enabled", true);
+
 // We don't use this directly (which is why we import it into an object literal
 // that we then discard), but nothing in the browser imports it, and it
 // needs to be imported in order for mozContacts to work, so we do it ourselves.
