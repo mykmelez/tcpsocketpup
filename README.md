@@ -14,9 +14,11 @@ after you uninstall the extension! So make sure you disable them once you
 no longer need to test the page. And *be careful about the pages for which
 you enable the APIs*, since you're escalating their privileges!
 
-<a href="https://people.mozilla.org/~myk/tcpsocketpup.xpi">Install Latest Release</a>
+<a href="https://github.com/mykmelez/tcpsocketpup/releases/latest">Latest Release</a>
 
 Credits
 =======
 
-"Plug-In" icon designed by <a href="http://www.thenounproject.com/itshorty">Florian Huber</a> from the <a href="http://www.thenounproject.com">Noun Project</a>.
+"Plug-In" icon designed by
+<a href="http://www.thenounproject.com/itshorty">Florian Huber</a>
+from the <a href="http://www.thenounproject.com">Noun Project</a>.
