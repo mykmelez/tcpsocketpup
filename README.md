@@ -1,8 +1,8 @@
 Introduction
 ============
 
-This Firefox extension toggles the mozTCPSocket and mozContacts APIs
-for web pages in Firefox, so you can test Open Web Apps that need access
+This Firefox extension toggles the mozTCPSocket, mozContacts, and mozbrowser
+APIs for web pages in Firefox, so you can test Open Web Apps that need access
 to those APIs in the browser.
 
 Install it, then press the "Plug-In" button in your toolbar while the page
