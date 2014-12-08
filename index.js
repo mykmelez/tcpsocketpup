@@ -29,6 +29,7 @@ const CONTACTS_WRITE_PERM = "contacts-write";
 const CONTACTS_CREATE_PERM = "contacts-create";
 const BROWSER_PERM = "browser";
 const DESKTOP_NOTIFICATION_PERM = "desktop-notification";
+const SYSTEMXHR_PERM = "systemXHR";
 const LABEL_DISABLED = "mozTCPSocket/mozContacts APIs disabled";
 const LABEL_ENABLED = "mozTCPSocket/mozContacts APIs enabled";
 const ICON_DISABLED = "./unplugged.svg";
@@ -60,6 +61,7 @@ var button = ActionButton({
       Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_CREATE_PERM, Services.perms.ALLOW_ACTION);
       Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), BROWSER_PERM, Services.perms.ALLOW_ACTION);
       Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), DESKTOP_NOTIFICATION_PERM, Services.perms.ALLOW_ACTION);
+      Services.perms.addFromPrincipal(getPrincipal(tabs.activeTab), SYSTEMXHR_PERM, Services.perms.ALLOW_ACTION);
       button.state("tab", STATE_ENABLED);
     }
     else {
@@ -69,6 +71,7 @@ var button = ActionButton({
       Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), CONTACTS_CREATE_PERM);
       Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), BROWSER_PERM);
       Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), DESKTOP_NOTIFICATION_PERM);
+      Services.perms.removeFromPrincipal(getPrincipal(tabs.activeTab), SYSTEMXHR_PERM);
       button.state("tab", STATE_DISABLED);
     }
   },
@@ -81,7 +84,8 @@ tabs.on("pageshow", function(tab) {
       Services.perms.testPermissionFromPrincipal(getPrincipal(tab), CONTACTS_WRITE_PERM) == Services.perms.ALLOW_ACTION &&
       Services.perms.testPermissionFromPrincipal(getPrincipal(tab), CONTACTS_CREATE_PERM) == Services.perms.ALLOW_ACTION &&
       Services.perms.testPermissionFromPrincipal(getPrincipal(tab), BROWSER_PERM) == Services.perms.ALLOW_ACTION &&
-      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), DESKTOP_NOTIFICATION_PERM) == Services.perms.ALLOW_ACTION) {
+      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), DESKTOP_NOTIFICATION_PERM) == Services.perms.ALLOW_ACTION &&
+      Services.perms.testPermissionFromPrincipal(getPrincipal(tab), SYSTEMXHR_PERM) == Services.perms.ALLOW_ACTION) {
     button.state(tab, STATE_ENABLED);
   }
   else {
