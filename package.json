@@ -1,8 +1,8 @@
 {
   "title": "API Enabler",
   "name": "tcpsocketpup",
-  "version": "0.6.0",
-  "description": "Toggle mozTCPSocket/mozContacts/mozbrowser/desktop-notification access for a page.",
+  "version": "0.7.0",
+  "description": "Toggle mozTCPSocket/mozContacts/mozbrowser/desktop-notification/systemXHR access for a page.",
   "main": "index.js",
   "author": "Myk Melez",
   "engines": {

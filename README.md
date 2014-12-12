@@ -1,9 +1,9 @@
 Introduction
 ============
 
-This Firefox extension toggles the mozTCPSocket, mozContacts, mozbrowser and
-Notification APIs for web pages in Firefox, so you can test Open Web Apps that
-need access to those APIs in the browser.
+This Firefox extension toggles the mozTCPSocket, mozContacts, mozbrowser,
+Notification APIs and systemXHR for web pages in Firefox, so you can test
+Open Web Apps that need access to those APIs in the browser.
 
 Install it, then press the "Plug-In" button in your toolbar while the page
 in question is loaded into the active tab, and the extension will enable
